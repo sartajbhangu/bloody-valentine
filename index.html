@@ -8,60 +8,74 @@
   <style>
     body {
       margin: 0;
-      height: 100vh;
-      background: #fff0f6;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #ffe6ee, #fff);
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       font-family: "Poppins", system-ui, sans-serif;
     }
 
     .container {
       text-align: center;
+      padding: 30px 20px;
+      max-width: 420px;
+      width: 100%;
     }
 
-    img {
-      width: 220px;
-      margin-bottom: 20px;
+    .image-wrapper {
+      width: 260px;
+      height: 260px;
+      margin: 0 auto 25px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     h1 {
-      font-size: 28px;
+      font-size: 30px;
       color: #ff4d6d;
-      margin-bottom: 30px;
+      margin-bottom: 35px;
     }
 
     .buttons {
       position: relative;
-      height: 120px;
-      width: 260px;
-      margin: 0 auto;
+      height: 140px;
     }
 
     button {
-      padding: 14px 30px;
-      font-size: 18px;
+      font-size: 20px;
+      padding: 16px 38px;
       border-radius: 999px;
       border: none;
       cursor: pointer;
-      transition: transform 0.15s ease;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
     #yes {
       background: #ff4d6d;
       color: white;
+      box-shadow: 0 14px 30px rgba(255,77,109,0.45);
     }
 
     #yes:hover {
-      transform: scale(1.05);
+      transform: scale(1.06);
+      box-shadow: 0 18px 36px rgba(255,77,109,0.55);
     }
 
     #no {
-      background: #ffe0e9;
+      background: #ffe3eb;
       color: #ff4d6d;
       position: absolute;
       right: 0;
       top: 0;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.12);
     }
   </style>
 </head>
@@ -69,54 +83,49 @@
 <body>
 
   <div class="container">
-    <img
-      id="gif"
-      src="https://raw.githubusercontent.com/Xeven777/valentine/main/public/cat.gif"
-      alt="cute gif"
-    >
+
+    <div class="image-wrapper">
+      <img id="gif" src="assets/val.jpeg" alt="her">
+    </div>
 
     <h1 id="text">will you be my valentine?</h1>
 
     <div class="buttons">
-      <button id="yes">yes</button>
+      <button id="yes">yes 💗</button>
       <button id="no">no</button>
     </div>
+
   </div>
 
   <script>
     const yesBtn = document.getElementById("yes");
     const noBtn = document.getElementById("no");
     const text = document.getElementById("text");
-    const gif = document.getElementById("gif");
 
-    const noMessages = [
+    const noTexts = [
       "are you sure?",
       "really sure?",
       "come on 😭",
-      "don’t do this to me",
+      "please?",
       "last chance"
     ];
 
     let noCount = 0;
 
     noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * 240 - 120;
-      const y = Math.random() * 80 - 40;
+      const x = Math.random() * 260 - 130;
+      const y = Math.random() * 100 - 50;
 
       noBtn.style.transform = `translate(${x}px, ${y}px)`;
 
-      if (noCount < noMessages.length) {
-        text.textContent = noMessages[noCount];
+      if (noCount < noTexts.length) {
+        text.textContent = noTexts[noCount];
         noCount++;
       }
     });
 
     yesBtn.addEventListener("click", () => {
-      gif.src =
-        "https://raw.githubusercontent.com/Xeven777/valentine/main/public/kiss.gif";
-
-      text.textContent = "yayyy 💖 i knew it";
-
+      text.textContent = "yayyy 💖 i love you";
       yesBtn.remove();
       noBtn.remove();
     });
