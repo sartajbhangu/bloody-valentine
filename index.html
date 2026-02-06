@@ -14,6 +14,19 @@
     align-items: center;
     justify-content: center;
     font-family: "Poppins", system-ui, sans-serif;
+    overflow: hidden;
+  }
+
+  body.shake {
+    animation: shake 0.3s;
+  }
+
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    50% { transform: translateX(4px); }
+    75% { transform: translateX(-4px); }
+    100% { transform: translateX(0); }
   }
 
   .container {
@@ -21,24 +34,25 @@
     width: 100%;
     max-width: 420px;
     padding: 24px;
+    position: relative;
   }
 
   h1 {
     font-size: 32px;
     color: #ff4d6d;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
     line-height: 1.2;
   }
 
   .image-box {
     width: 280px;
     height: 280px;
-    margin: 0 auto 28px;
+    margin: 0 auto 24px;
     border-radius: 28px;
     overflow: hidden;
     box-shadow: 0 25px 50px rgba(0,0,0,0.18);
     display: none;
-    animation: popIn 0.5s ease forwards;
+    animation: popIn 0.45s ease forwards;
   }
 
   .image-box img {
@@ -48,19 +62,13 @@
   }
 
   @keyframes popIn {
-    from {
-      opacity: 0;
-      transform: scale(0.92);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
+    from { opacity: 0; transform: scale(0.9); }
+    to   { opacity: 1; transform: scale(1); }
   }
 
   .buttons {
     position: relative;
-    height: 160px;
+    height: 170px;
   }
 
   button {
@@ -89,6 +97,24 @@
     right: 0;
     top: 0;
   }
+
+  .heart {
+    position: fixed;
+    font-size: 24px;
+    pointer-events: none;
+    animation: floatUp 2.5s ease forwards;
+  }
+
+  @keyframes floatUp {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-120px) scale(1.4);
+    }
+  }
 </style>
 </head>
 
@@ -114,6 +140,7 @@
   const no = document.getElementById("no");
   const text = document.getElementById("text");
   const imageBox = document.getElementById("imageBox");
+  const body = document.body;
 
   const noLines = [
     "are you sure?",
@@ -125,16 +152,22 @@
 
   let noCount = 0;
 
-  no.addEventListener("mouseover", () => {
-    const x = Math.random() * 300 - 150;
-    const y = Math.random() * 120 - 60;
+  function dodgeNo() {
+    const x = Math.random() * 320 - 160;
+    const y = Math.random() * 140 - 70;
     no.style.transform = `translate(${x}px, ${y}px)`;
+
+    body.classList.add("shake");
+    setTimeout(() => body.classList.remove("shake"), 300);
 
     if (noCount < noLines.length) {
       text.textContent = noLines[noCount];
       noCount++;
     }
-  });
+  }
+
+  no.addEventListener("mouseover", dodgeNo);
+  no.addEventListener("touchstart", dodgeNo);
 
   yes.addEventListener("click", () => {
     imageBox.style.display = "block";
@@ -142,7 +175,28 @@
 
     yes.remove();
     no.remove();
+
+    setTimeout(() => {
+      text.textContent = "i really wanted this to be you.";
+    }, 1600);
+
+    startHearts();
   });
+
+  function startHearts() {
+    const interval = setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = "💗";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.top = window.innerHeight - 40 + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 2500);
+    }, 120);
+
+    setTimeout(() => clearInterval(interval), 2000);
+  }
 </script>
 
 </body>
