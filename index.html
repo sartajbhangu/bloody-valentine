@@ -30,12 +30,25 @@
       border-radius: 24px;
       overflow: hidden;
       box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      display: none;
+      animation: fadeIn 0.5s ease forwards;
     }
 
     .image-wrapper img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     h1 {
@@ -84,8 +97,8 @@
 
   <div class="container">
 
-    <div class="image-wrapper">
-      <img id="gif" src="assets/val.jpeg" alt="her">
+    <div class="image-wrapper" id="imageBox">
+      <img src="assets/her.jpg" alt="her">
     </div>
 
     <h1 id="text">will you be my valentine?</h1>
@@ -101,6 +114,7 @@
     const yesBtn = document.getElementById("yes");
     const noBtn = document.getElementById("no");
     const text = document.getElementById("text");
+    const imageBox = document.getElementById("imageBox");
 
     const noTexts = [
       "are you sure?",
@@ -125,7 +139,9 @@
     });
 
     yesBtn.addEventListener("click", () => {
+      imageBox.style.display = "block";
       text.textContent = "yayyy 💖 i love you";
+
       yesBtn.remove();
       noBtn.remove();
     });
