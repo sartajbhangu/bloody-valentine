@@ -2,177 +2,112 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>hey</title>
+<title>valentine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root {
-  --pink: #ff5c8a;
-  --soft: #fff7fa;
-  --text: #2f2f2f;
-}
-
-* {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
   height: 100vh;
-  background:
-    radial-gradient(circle at top left, #ffd6e5, transparent 60%),
-    radial-gradient(circle at bottom right, #ffc2d1, transparent 60%),
-    linear-gradient(120deg, #fff0f5, #ffe5ec);
+  background: #fff0f6;
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  animation: bgMove 12s ease-in-out infinite alternate;
+  align-items: center;
+  font-family: "Poppins", system-ui, sans-serif;
 }
 
-@keyframes bgMove {
-  from { background-position: 0% 0%; }
-  to   { background-position: 100% 100%; }
-}
-
-.card {
-  width: 380px;
-  padding: 48px 44px;
-  border-radius: 28px;
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(14px);
-  box-shadow:
-    0 30px 60px rgba(0,0,0,0.12),
-    inset 0 1px 0 rgba(255,255,255,0.6);
+.container {
   text-align: center;
-  position: relative;
 }
 
-.card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 28px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Crect width='60' height='60' fill='none'/%3E%3Ccircle cx='1' cy='1' r='1' fill='rgba(0,0,0,0.03)'/%3E%3C/svg%3E");
-  opacity: 0.5;
-  pointer-events: none;
+img {
+  width: 220px;
+  margin-bottom: 20px;
 }
 
-#text {
-  font-size: 20px;
-  color: var(--text);
-  line-height: 1.4;
-  min-height: 64px;
-  margin-bottom: 36px;
+h1 {
+  font-size: 28px;
+  color: #ff4d6d;
+  margin-bottom: 30px;
 }
 
 .buttons {
   position: relative;
-  height: 70px;
+  height: 120px;
 }
 
 button {
-  padding: 12px 26px;
-  font-size: 16px;
-  border-radius: 22px;
+  padding: 14px 30px;
+  font-size: 18px;
+  border-radius: 999px;
   border: none;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: transform 0.15s ease;
 }
 
 #yes {
-  background: linear-gradient(135deg, #ff6f91, #ff4d6d);
+  background: #ff4d6d;
   color: white;
-  box-shadow: 0 12px 24px rgba(255,92,138,0.35);
-}
-
-#yes:hover {
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 16px 30px rgba(255,92,138,0.45);
 }
 
 #no {
-  background: var(--soft);
-  color: #555;
+  background: #ffe0e9;
+  color: #ff4d6d;
   position: absolute;
   right: 0;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.1);
 }
 
-.fade {
-  animation: fadeIn 0.6s ease forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+#yes:hover {
+  transform: scale(1.05);
 }
 </style>
 </head>
 
 <body>
 
-<div class="card fade">
-  <div id="text">i’ve been meaning to ask you something</div>
+<div class="container">
+  <img id="gif" src="https://media.tenor.com/0AVbKGY_MxMAAAAC/cute.gif">
+  <h1 id="text">will you be my valentine?</h1>
 
   <div class="buttons">
-    <button id="yes">okay</button>
+    <button id="yes">yes</button>
     <button id="no">no</button>
   </div>
 </div>
 
 <script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
 const text = document.getElementById("text");
-const yes = document.getElementById("yes");
-const no = document.getElementById("no");
+const gif = document.getElementById("gif");
+
+const noTexts = [
+  "are you sure?",
+  "really sure?",
+  "come on 😭",
+  "don’t do this to me",
+  "last chance"
+];
 
 let noCount = 0;
-let idle = 0;
 
-const idleLines = [
-  "no pressure, really",
-  "this is the quiet part",
-  "i know this is a little awkward",
-  "i’m still here"
-];
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * 240 - 120;
+  const y = Math.random() * 80 - 40;
 
-const dodgeLines = [
-  "hey",
-  "wait",
-  "come on",
-  "you’re avoiding me",
-  "okay okay"
-];
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
 
-setInterval(() => {
-  idle++;
-  if (idle <= idleLines.length * 3 && idle % 3 === 0) {
-    text.textContent = idleLines[idle / 3 - 1];
-    text.classList.add("fade");
+  if (noCount < noTexts.length) {
+    text.textContent = noTexts[noCount];
+    noCount++;
   }
-}, 1000);
-
-document.addEventListener("mousemove", () => idle = 0);
-
-no.addEventListener("mouseover", () => {
-  idle = 0;
-  noCount++;
-
-  no.style.right = Math.random() * 140 + "px";
-  no.style.top = Math.random() * 40 - 20 + "px";
-
-  if (noCount <= dodgeLines.length) {
-    text.textContent = dodgeLines[noCount - 1];
-    text.classList.add("fade");
-  }
-
-  if (noCount > 4) no.textContent = "fine";
 });
 
-yes.addEventListener("click", () => {
-  text.textContent =
-    "i’m glad you said yes. i didn’t want this to be flashy — just honest.";
-  yes.remove();
-  no.remove();
+yesBtn.addEventListener("click", () => {
+  gif.src = "https://media.tenor.com/1z8VQ1z8o7sAAAAC/cute-love.gif";
+  text.textContent = "yayyy 💖 i knew it";
+  noBtn.remove();
+  yesBtn.remove();
 });
 </script>
 
