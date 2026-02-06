@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>hey</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: #ffeef3;
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box {
+  background: white;
+  padding: 40px 50px;
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  text-align: center;
+  max-width: 360px;
+}
+
+h1 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+button {
+  font-size: 16px;
+  padding: 10px 22px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+#yes {
+  background: #ff5d8f;
+  color: white;
+  margin-right: 10px;
+}
+
+#no {
+  background: #eee;
+  color: #555;
+  position: relative;
+}
+
+#msg {
+  margin-top: 25px;
+  font-size: 16px;
+  color: #444;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h1>so… i was wondering</h1>
+  <button id="yes">okay 💗</button>
+  <button id="no">nope</button>
+  <div id="msg"></div>
+</div>
+
+<script>
+const no = document.getElementById("no");
+const yes = document.getElementById("yes");
+const msg = document.getElementById("msg");
+
+let dodges = 0;
+
+no.addEventListener("mouseover", () => {
+  dodges++;
+  no.style.transform =
+    `translate(${(Math.random()*60)-30}px, ${(Math.random()*40)-20}px)`;
+
+  if (dodges > 4) {
+    no.textContent = "wait";
+  }
+});
+
+yes.addEventListener("click", () => {
+  msg.textContent =
+    "i’m really glad you said yes. i wanted this to feel simple, not dramatic.";
+  yes.remove();
+  no.remove();
+});
+</script>
+
+</body>
+</html>
