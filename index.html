@@ -5,64 +5,114 @@
 <title>hey</title>
 
 <style>
+:root {
+  --pink: #ff5c8a;
+  --soft: #fff7fa;
+  --text: #2f2f2f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   height: 100vh;
-  background: #fff1f5;
-  font-family: Arial, sans-serif;
+  background:
+    radial-gradient(circle at top left, #ffd6e5, transparent 60%),
+    radial-gradient(circle at bottom right, #ffc2d1, transparent 60%),
+    linear-gradient(120deg, #fff0f5, #ffe5ec);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  animation: bgMove 12s ease-in-out infinite alternate;
+}
+
+@keyframes bgMove {
+  from { background-position: 0% 0%; }
+  to   { background-position: 100% 100%; }
 }
 
 .card {
-  background: white;
-  padding: 42px;
-  border-radius: 20px;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+  width: 380px;
+  padding: 48px 44px;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 30px 60px rgba(0,0,0,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.6);
   text-align: center;
-  width: 340px;
+  position: relative;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Crect width='60' height='60' fill='none'/%3E%3Ccircle cx='1' cy='1' r='1' fill='rgba(0,0,0,0.03)'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 #text {
-  font-size: 18px;
-  color: #333;
-  min-height: 60px;
+  font-size: 20px;
+  color: var(--text);
+  line-height: 1.4;
+  min-height: 64px;
+  margin-bottom: 36px;
 }
 
 .buttons {
-  margin-top: 28px;
   position: relative;
-  height: 80px;
+  height: 70px;
 }
 
 button {
-  padding: 10px 22px;
-  font-size: 15px;
-  border-radius: 18px;
+  padding: 12px 26px;
+  font-size: 16px;
+  border-radius: 22px;
   border: none;
   cursor: pointer;
+  transition: all 0.25s ease;
 }
 
 #yes {
-  background: #ff5c8a;
+  background: linear-gradient(135deg, #ff6f91, #ff4d6d);
   color: white;
-  transition: transform 0.2s ease;
+  box-shadow: 0 12px 24px rgba(255,92,138,0.35);
+}
+
+#yes:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 16px 30px rgba(255,92,138,0.45);
 }
 
 #no {
-  background: #eee;
+  background: var(--soft);
   color: #555;
   position: absolute;
   right: 0;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+}
+
+.fade {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <div id="text">i’ve been thinking about asking you something</div>
+<div class="card fade">
+  <div id="text">i’ve been meaning to ask you something</div>
 
   <div class="buttons">
     <button id="yes">okay</button>
@@ -76,59 +126,51 @@ const yes = document.getElementById("yes");
 const no = document.getElementById("no");
 
 let noCount = 0;
-let idleTimer = 0;
+let idle = 0;
 
-const idleMessages = [
-  "take your time, i’m not rushing you",
-  "this is the awkward pause part",
-  "i promise this isn’t a trick",
-  "still here, by the way"
+const idleLines = [
+  "no pressure, really",
+  "this is the quiet part",
+  "i know this is a little awkward",
+  "i’m still here"
 ];
 
-const noMessages = [
+const dodgeLines = [
   "hey",
-  "okay wait",
-  "that’s not fair",
-  "you’re fast",
-  "alright i give up"
+  "wait",
+  "come on",
+  "you’re avoiding me",
+  "okay okay"
 ];
 
 setInterval(() => {
-  idleTimer++;
-  if (idleTimer === 4) text.textContent = idleMessages[0];
-  if (idleTimer === 7) text.textContent = idleMessages[1];
-  if (idleTimer === 10) text.textContent = idleMessages[2];
-  if (idleTimer === 14) text.textContent = idleMessages[3];
+  idle++;
+  if (idle <= idleLines.length * 3 && idle % 3 === 0) {
+    text.textContent = idleLines[idle / 3 - 1];
+    text.classList.add("fade");
+  }
 }, 1000);
 
-document.addEventListener("mousemove", () => idleTimer = 0);
+document.addEventListener("mousemove", () => idle = 0);
 
 no.addEventListener("mouseover", () => {
+  idle = 0;
   noCount++;
-  idleTimer = 0;
 
-  no.style.right = Math.random() * 120 + "px";
+  no.style.right = Math.random() * 140 + "px";
   no.style.top = Math.random() * 40 - 20 + "px";
 
-  if (noCount <= noMessages.length)
-    text.textContent = noMessages[noCount - 1];
-
-  if (noCount > 4) {
-    no.textContent = "fine";
+  if (noCount <= dodgeLines.length) {
+    text.textContent = dodgeLines[noCount - 1];
+    text.classList.add("fade");
   }
-});
 
-yes.addEventListener("mouseover", () => {
-  yes.style.transform = "scale(1.05)";
-});
-
-yes.addEventListener("mouseout", () => {
-  yes.style.transform = "scale(1)";
+  if (noCount > 4) no.textContent = "fine";
 });
 
 yes.addEventListener("click", () => {
   text.textContent =
-    "i’m glad. i didn’t want to overdo this — i just wanted it to be honest.";
+    "i’m glad you said yes. i didn’t want this to be flashy — just honest.";
   yes.remove();
   no.remove();
 });
