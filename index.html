@@ -1,115 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>valentine</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>valentine</title>
 
-<style>
-body {
-  margin: 0;
-  height: 100vh;
-  background: #fff0f6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Poppins", system-ui, sans-serif;
-}
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #fff0f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Poppins", system-ui, sans-serif;
+    }
 
-.container {
-  text-align: center;
-}
+    .container {
+      text-align: center;
+    }
 
-img {
-  width: 220px;
-  margin-bottom: 20px;
-}
+    img {
+      width: 220px;
+      margin-bottom: 20px;
+    }
 
-h1 {
-  font-size: 28px;
-  color: #ff4d6d;
-  margin-bottom: 30px;
-}
+    h1 {
+      font-size: 28px;
+      color: #ff4d6d;
+      margin-bottom: 30px;
+    }
 
-.buttons {
-  position: relative;
-  height: 120px;
-}
+    .buttons {
+      position: relative;
+      height: 120px;
+      width: 260px;
+      margin: 0 auto;
+    }
 
-button {
-  padding: 14px 30px;
-  font-size: 18px;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.15s ease;
-}
+    button {
+      padding: 14px 30px;
+      font-size: 18px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
 
-#yes {
-  background: #ff4d6d;
-  color: white;
-}
+    #yes {
+      background: #ff4d6d;
+      color: white;
+    }
 
-#no {
-  background: #ffe0e9;
-  color: #ff4d6d;
-  position: absolute;
-  right: 0;
-}
+    #yes:hover {
+      transform: scale(1.05);
+    }
 
-#yes:hover {
-  transform: scale(1.05);
-}
-</style>
+    #no {
+      background: #ffe0e9;
+      color: #ff4d6d;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="container">
-  <img id="gif" src="https://media.tenor.com/0AVbKGY_MxMAAAAC/cute.gif">
-  <h1 id="text">will you be my valentine?</h1>
+  <div class="container">
+    <img
+      id="gif"
+      src="https://raw.githubusercontent.com/Xeven777/valentine/main/public/cat.gif"
+      alt="cute gif"
+    >
 
-  <div class="buttons">
-    <button id="yes">yes</button>
-    <button id="no">no</button>
+    <h1 id="text">will you be my valentine?</h1>
+
+    <div class="buttons">
+      <button id="yes">yes</button>
+      <button id="no">no</button>
+    </div>
   </div>
-</div>
 
-<script>
-const noBtn = document.getElementById("no");
-const yesBtn = document.getElementById("yes");
-const text = document.getElementById("text");
-const gif = document.getElementById("gif");
+  <script>
+    const yesBtn = document.getElementById("yes");
+    const noBtn = document.getElementById("no");
+    const text = document.getElementById("text");
+    const gif = document.getElementById("gif");
 
-const noTexts = [
-  "are you sure?",
-  "really sure?",
-  "come on 😭",
-  "don’t do this to me",
-  "last chance"
-];
+    const noMessages = [
+      "are you sure?",
+      "really sure?",
+      "come on 😭",
+      "don’t do this to me",
+      "last chance"
+    ];
 
-let noCount = 0;
+    let noCount = 0;
 
-noBtn.addEventListener("mouseover", () => {
-  const x = Math.random() * 240 - 120;
-  const y = Math.random() * 80 - 40;
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * 240 - 120;
+      const y = Math.random() * 80 - 40;
 
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
 
-  if (noCount < noTexts.length) {
-    text.textContent = noTexts[noCount];
-    noCount++;
-  }
-});
+      if (noCount < noMessages.length) {
+        text.textContent = noMessages[noCount];
+        noCount++;
+      }
+    });
 
-yesBtn.addEventListener("click", () => {
-  gif.src = "https://media.tenor.com/1z8VQ1z8o7sAAAAC/cute-love.gif";
-  text.textContent = "yayyy 💖 i knew it";
-  noBtn.remove();
-  yesBtn.remove();
-});
-</script>
+    yesBtn.addEventListener("click", () => {
+      gif.src =
+        "https://raw.githubusercontent.com/Xeven777/valentine/main/public/kiss.gif";
+
+      text.textContent = "yayyy 💖 i knew it";
+
+      yesBtn.remove();
+      noBtn.remove();
+    });
+  </script>
 
 </body>
 </html>
